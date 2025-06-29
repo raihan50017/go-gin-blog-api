@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	"example.com/go-gin-blog-api/models"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -37,4 +38,8 @@ func ConnectDB() {
 
 	DB = db
 	fmt.Println("Connected to PostgreSQL")
+}
+
+func MigrateDB() {
+	DB.AutoMigrate(&models.User{}, &models.Post{}, &models.Comment{}, &models.Reaction{}, &models.RefreshToken{})
 }

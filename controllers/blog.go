@@ -100,3 +100,26 @@ func (bc *BlogController) DeletePost(c *gin.Context) {
 	bc.DB.Delete(&post)
 	c.JSON(http.StatusOK, gin.H{"message": "Post deleted"})
 }
+
+func (bc *BlogController) GetMyPosts(c *gin.Context) {
+	username := c.GetString("username")
+
+	var user models.User
+	if err := bc.DB.
+		Where("username = ?", username).
+		First(&user).Error; err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "User not found"})
+		return
+	}
+
+	var posts []models.Post
+	if err := bc.DB.
+		Where("author_id = ?", user.ID).
+		Order("created_at desc").
+		Find(&posts).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve posts"})
+		return
+	}
+
+	c.JSON(http.StatusOK, posts)
+}
