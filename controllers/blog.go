@@ -40,7 +40,15 @@ func (bc *BlogController) CreatePost(c *gin.Context) {
 
 func (bc *BlogController) GetPosts(c *gin.Context) {
 	var posts []models.Post
-	bc.DB.Order("created_at desc").Find(&posts)
+
+	if err := bc.DB.
+		Preload("User").
+		Order("created_at desc").
+		Find(&posts).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
 	c.JSON(http.StatusOK, posts)
 }
 

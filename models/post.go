@@ -8,4 +8,6 @@ type Post struct {
 	Content  string `json:"content" binding:"required"`
 	Author   string `json:"author"`
 	AuthorID uint   `json:"author_id"`
+
+	User User `json:"user" gorm:"foreignKey:AuthorID;references:ID"`
 }
