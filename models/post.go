@@ -9,5 +9,7 @@ type Post struct {
 	Author   string `json:"author"`
 	AuthorID uint   `json:"author_id"`
 
-	User User `json:"user" gorm:"foreignKey:AuthorID;references:ID"`
+	User      User       `json:"user" gorm:"foreignKey:AuthorID;references:ID"`
+	Comments  []Comment  `json:"comments" gorm:"foreignKey:PostID"`
+	Reactions []Reaction `json:"reactions" gorm:"foreignKey:PostID"`
 }
