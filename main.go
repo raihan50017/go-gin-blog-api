@@ -3,7 +3,7 @@ package main
 import (
 	"time"
 
-	"example.com/go-gin-blog-api/routes"
+	"example.com/go-gin-blog-api/route"
 	"example.com/go-gin-blog-api/utils"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -24,7 +24,7 @@ func main() {
 		MaxAge:           12 * time.Hour,
 	}))
 
-	routes.RegisterRoutes(r)
+	route.RegisterRoutes(r)
 
 	r.Run(":8080")
 }

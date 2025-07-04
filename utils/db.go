@@ -5,7 +5,10 @@ import (
 	"log"
 	"os"
 
-	"example.com/go-gin-blog-api/models"
+	authModel "example.com/go-gin-blog-api/auth/model"
+	commentModel "example.com/go-gin-blog-api/comment/model"
+	postModel "example.com/go-gin-blog-api/post/model"
+	reactionModel "example.com/go-gin-blog-api/reaction/model"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -41,5 +44,5 @@ func ConnectDB() {
 }
 
 func MigrateDB() {
-	DB.AutoMigrate(&models.User{}, &models.Post{}, &models.Comment{}, &models.Reaction{}, &models.RefreshToken{})
+	DB.AutoMigrate(&authModel.User{}, &postModel.Post{}, &commentModel.Comment{}, &reactionModel.Reaction{}, &authModel.RefreshToken{})
 }
